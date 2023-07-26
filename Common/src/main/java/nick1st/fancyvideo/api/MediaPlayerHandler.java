@@ -80,7 +80,7 @@ public final class MediaPlayerHandler {
             if (Constants.NO_LIBRARY_MODE) {
                 MediaPlayerHandler.instance = new MediaPlayerHandler(null);
             } else {
-                MediaPlayerHandler.instance = new MediaPlayerHandler(new MediaPlayerFactory("--no-metadata-network-access", "--file-logging", "--logfile", "logs/vlc.log", "--logmode", "text", "--verbose", "2", "--no-quiet"));
+                MediaPlayerHandler.instance = new MediaPlayerHandler(new MediaPlayerFactory("--cr-average", "10000", "--avcodec-skip-idct", "4", "--swscale-mode", "0", "--avcodec-fast", "--avcodec-hurry-up", "--high-priority", "--file-caching", "800", "--vout", "direct3d11,direct3d9,any", "--avcodec-hw", "d3d11va,dxva2,none", "--no-metadata-network-access", "--file-logging", "--logfile", "logs/vlc.log", "--logmode", "text", "--verbose", "2", "--no-quiet"));
             }
         }
         return MediaPlayerHandler.instance;
