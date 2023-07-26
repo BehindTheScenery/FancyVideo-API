@@ -1,25 +1,32 @@
-# MultiLoader Template
+# FancyVideo-API
 
-This project provides a Gradle project template that can compile mods for both Forge and Fabric using a common sourceset. This project does not require any third party libraries or dependencies.
+This minecraft mod provides a simple API for playing videos in Minecraft. Originally by Nick1st
 
-## Getting Started
+## Fork Changes
 
-## IntelliJ IDEA
-This guide will show how to import the MultiLoader Template into IntelliJ IDEA. The setup process is roughly equivalent to setting up Forge and Fabric independently and should be very familiar to anyone who has worked with their MDKs.
+- Now FancyVideo API tries to use hardware acceleration approach for videos played by MediaPlayerHandler. This is mostly useful when you have a decent videocard in your PC.
+- More video output stream optimizations, such as expanded file caching, fast bilinear scaling, allowing avcodec's speed tricks to be used and other avcodec performance tricks.
+- Added D3D11 and D3D9 video output plugins to FVA binaries. (only amd64)
 
-1. Clone or download this repository to your computer.
-2. Configure the project by editing the `group`, `mod_name`, `mod_author`, and `mod_id` properties in the `gradle.properties` file. You will also need to change the `rootProject.name`  property in `settings.gradle`.
-3. Open the template's root folder as a new project in IDEA. This is the folder that contains this README file and the gradlew executable.
-4. If your default JVM/JDK is not Java 16 you will encounter an error when opening the project. This error is fixed by going to `File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JVM`and changing the value to a valid Java 16 JVM. You will also need to set the Project SDK to Java 16. This can be done by going to `File > Project Structure > Project SDK`. Once both have been set open the Gradle tab in IDEA and click the refresh button to reload the project.
-5. Open the Gradle tab in IDEA if it has not already been opened. Navigate to `Your Project > Common > Tasks > vanilla gradle > decompile`. Run this task to decompile Minecraft.
-6. Open the Gradle tab in IDEA if it has not already been opened. Navigate to `Your Project > Forge > Tasks > forgegradle runs > genIntellijRuns`. Run this task to set up run configurations for Forge.
-7. Open your Run/Debug Configurations. Under the Application category there should now be options to run Forge and Fabric projects. Select one of the client options and try to run it.
-8. Assuming you were able to run the game in step 7 your workspace should now be set up.
+This changes are basically a bit complicated approach using arguments to be able to load MKVs, MP4s at a much higher rates, allowing 60fps videos being able to be loaded in an instances, which are using shaders and lots of mods.
 
-### Eclipse
-Eclipse is not supported. During the development of this mod and the template it uses multiple critical bugs and quirks related to Eclipse were found at nearly every level of the required build tools. Eclipse is considered unsupported by this project.
+They allow smooth 60fps videos (such as [Numinous](https://www.youtube.com/watch?v=aht9ZSwpMCk)) to be loaded as intended, with all the fluid transitions and animations.
+Also this change allows to properly support vp9/avc1 codec on certain machines and video cards, so they get not laggy when the video is played on runtime. (e.g. Cinematic mod allows to play videos, so when the cinematic starts on a laggy place, the cinematic will try to use hardware acceleration if possible to use more GPU, rather than CPU)
 
-## Development Guide
-When using this template the majority of your mod is developed in the Common project. The Common project is compiled against the vanilla game and is used to hold code that is shared between the different loader-specific versions of your mod. The Common project has no knowledge or access to ModLoader specific code, apis, or concepts. Code that requires something from a specific loader must be done through the project that is specific to that loader, such as the Forge or Fabric project.
+Feel free to throw tomatoes at me or make a PR to make this better, but I had literally no other idea what I can do here to make videos be able to be loaded just as smooth as I wanted to.
 
-Loader specific projects such as the Forge and Fabric project are used to load the Common project into the game. These projects also define code that is specific to that loader. Loader specific projects can access all of the code in the Common project. It is important to remember that the Common project can not access code from loader specific projects.
+**Opus audio currently not supported and won't play since no compatible `libopus` binary found for July 9, 2022 FVA build. Attempting to use the newer versions of Opus plugin from VLC 4.0.0 will cause Minecraft crash on it's own.**
+
+# Licensing
+
+This Project contains files from the VLCJ project, licensed under the terms of the GNU GENERAL PUBLIC LICENSE Version 3. Sources are available at https://github.com/caprica/vlcj. 
+
+This Project contains files from the VLC project, licensed under the terms of the GNU General Public License Version 2. Sources are available at https://code.videolan.org/videolan/vlc/.
+
+# Maintaining and Support?
+
+At the moment of writing this, I'm working on a modpack requiring FancyVideo API to work, probably some other changes may be introduced later. Only Fabric 1.19.2 is currently maintained. (`1.19` branch)
+
+If you want to help maintain this fork, well, you're welcome. I'm open to PRs to make this API better, however, it's just a fork to be able to load wonky and lossless videos in Minecraft.
+
+CurseForge/Modrinth builds of the fork are not planned at the moment.
